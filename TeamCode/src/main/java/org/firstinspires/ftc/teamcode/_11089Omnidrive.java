@@ -17,7 +17,7 @@ public class _11089Omnidrive extends LinearOpMode {
     double forwardsVelocity;
     double horizontalVelocity;
     double Dir_x, Dir_y;
-    double speed = 0.3;
+    double speed = 0.8;
 
     private double Clamp(double value, double min, double max) {
         return Math.min(max, Math.max(value, min));

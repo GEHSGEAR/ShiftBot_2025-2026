@@ -13,7 +13,7 @@ public class fourWheelDrive {
     double forwardsVelocity;
     double horizontalVelocity;
     double Dir_x, Dir_y;
-    double speed = 0.3;
+    double speed = 0.8;
 
     /**
      * Initailization.
