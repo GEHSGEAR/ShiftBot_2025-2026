@@ -13,7 +13,7 @@ public class _11089Omnidrive extends LinearOpMode {
     private DcMotor back_left_drive;
     private DcMotor front_right_drive;
     private DcMotor back_right_drive;
-    private DcMotor Arm, Arm2;
+    private DcMotor Arm;
     double forwardsVelocity;
     double horizontalVelocity;
     double Dir_x, Dir_y;
@@ -32,7 +32,7 @@ public class _11089Omnidrive extends LinearOpMode {
         front_right_drive = hardwareMap.get(DcMotor.class, "frd");
         back_right_drive = hardwareMap.get(DcMotor.class, "brd");
         Arm = hardwareMap.get(DcMotor.class, "Arm");
-        Arm2 = hardwareMap.get(DcMotor.class, "Arm2");
+        
         // You will have to determine which motor to reverse for your robot.
         // In this example, the right motor was reversed so that positive
         // applied power makes it move the robot in the forward direction.
@@ -55,13 +55,13 @@ public class _11089Omnidrive extends LinearOpMode {
                 forwardsVelocity -= gamepad1.right_stick_y;
                 if (gamepad1.right_bumper ) {
                     Arm.setPower(-1.0);
-                    Arm2.setPower(-1.0);
+                    
                 } else if (gamepad1.left_bumper) {
                     Arm.setPower(1.0);
-                    Arm2.setPower(1.0);
+                    
                 } else {
                     Arm.setPower(0.0);
-                    Arm2.setPower(0.0);
+                    
                 }
                 // Put loop blocks here.
                 // The Y axis of a joystick ranges from -1 in its topmost position to +1 in its bottommost position.
