@@ -13,8 +13,8 @@ public class fourWheelDrive {
     double forwardsVelocity;
     double horizontalVelocity;
     double Dir_x, Dir_y;
-    double speed = 0.3;
-
+    double speed = 0.8;
+boolean flip_h = false;
     /**
      * Initailization.
      * @param hardwareMap the robot hardware map
@@ -23,12 +23,12 @@ public class fourWheelDrive {
                      boolean fl_reverse,
                      boolean fr_reverse,
                      boolean bl_reverse,
-                     boolean br_reverse){
+                     boolean br_reverse, boolean flip_h_velocity){
         front_left_drive = hardwareMap.get(DcMotor.class, "fld");
         back_left_drive = hardwareMap.get(DcMotor.class, "bld");
         front_right_drive = hardwareMap.get(DcMotor.class, "frd");
         back_right_drive = hardwareMap.get(DcMotor.class, "brd");
-
+        flip_h = flip_h_velocity;
 
         // You will have to determine which motor to reverse for your robot.
         // In this example, the right motor was reversed so that positive
@@ -64,7 +64,7 @@ public class fourWheelDrive {
                        com.qualcomm.robotcore.hardware.Gamepad gamepad2) {
         // Mario Cart Controls
         forwardsVelocity = -gamepad1.left_trigger + gamepad1.right_trigger;
-        horizontalVelocity = gamepad1.left_stick_x  * speed;
+        horizontalVelocity = gamepad1.left_stick_x  * speed * (flip_h ? -1 : 1);
         // Right Stick
         Dir_x = gamepad1.right_stick_x;
         forwardsVelocity -= gamepad1.right_stick_y;
@@ -72,11 +72,11 @@ public class fourWheelDrive {
         // Put loop blocks here.
         // The Y axis of a joystick ranges from -1 in its topmost position to +1 in its bottommost position.
         // We negate this value so that the topmost position corresponds to maximum forward power.
-        front_left_drive.setPower(Clamp((((forwardsVelocity + Dir_x) * speed) - horizontalVelocity), -1.0, 1.0));
-        front_right_drive.setPower(Clamp(((forwardsVelocity - Dir_x) * speed) + horizontalVelocity, -1.0, 1.0));
+        front_left_drive.setPower(Clamp((((forwardsVelocity + Dir_x) - horizontalVelocity) * speed), -1.0, 1.0));
+        front_right_drive.setPower(Clamp((((forwardsVelocity - Dir_x) + horizontalVelocity) * speed), -1.0, 1.0));
 
-        back_left_drive.setPower(Clamp(((forwardsVelocity - Dir_x) * speed) - horizontalVelocity, -1.0, 1.0));
-        back_right_drive.setPower(Clamp(((forwardsVelocity + Dir_x )* speed) + horizontalVelocity, -1.0, 1.0));
+        back_left_drive.setPower(Clamp((((forwardsVelocity - Dir_x) - horizontalVelocity) * speed), -1.0, 1.0));
+        back_right_drive.setPower(Clamp((((forwardsVelocity + Dir_x ) + horizontalVelocity) * speed), -1.0, 1.0));
         // Telemetry is how we send data to the driverhub
         telemetry.addData("Power", forwardsVelocity);
         telemetry.addData("direction", horizontalVelocity);
