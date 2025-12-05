@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class _27112Omnidrive extends LinearOpMode {
 
 fourWheelDrive drive;
-    private DcMotor spin1;
+
     /**
      * This function is executed when this OpMode is selected from the Driver Station.
      */
@@ -17,9 +17,9 @@ fourWheelDrive drive;
     public void runOpMode() {
         drive = new fourWheelDrive();
 
-        drive.Init(hardwareMap, false, true, false, true);
-        spin1 = hardwareMap.get(DcMotor.class, "spin1");
-      
+        drive.Init(hardwareMap, false, true, false, true, false);
+        DcMotor spin1 = hardwareMap.get(DcMotor.class, "spin1");
+        Servo drop = hardwareMap.get(Servo.class, "drop");
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
@@ -28,12 +28,12 @@ fourWheelDrive drive;
                 drive.Update(telemetry, gamepad1, gamepad2);
                 if (gamepad1.x) {
                     spin1.setPower(1);
-                    
+                    drop.setPosition(1);
                 } else {
                     spin1.setPower(0);
-                    
+                    drop.setPosition(0);
                 }
-                
+
                 telemetry.update();
             }
         }
