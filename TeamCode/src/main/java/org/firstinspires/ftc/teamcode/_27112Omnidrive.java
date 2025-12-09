@@ -27,11 +27,15 @@ fourWheelDrive drive;
             while (opModeIsActive()) {
                 drive.Update(telemetry, gamepad1, gamepad2);
                 if (gamepad1.x) {
-                    spin1.setPower(1);
                     drop.setPosition(1);
                 } else {
-                    spin1.setPower(0);
                     drop.setPosition(0);
+                }
+                if (gamepad1.right_trigger >= 0.5) {
+                    spin1.setPower(1);
+                }
+                else {
+                    spin1.setPower(0);
                 }
 
                 telemetry.update();
